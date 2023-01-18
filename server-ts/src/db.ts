@@ -7,4 +7,6 @@ const db = Knex(knexStringCase({
     client: "mysql2",
     connection: appConfig.dbconnectinfo,
     useNullAsDefalult: true
-}))
+}));
+
+export default db;
