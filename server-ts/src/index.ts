@@ -10,10 +10,10 @@ import cors from '@koa/cors'
 const app = new Koa()
 
 app.use(json())
-app.use(apiRouter.routes())
-app.use(koaBody())
 
-app.listen(8000)
+
+
+
 app.use(cors());
 app.use(koaBody());
 app.use(apiRouter.routes());
