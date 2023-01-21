@@ -9,6 +9,7 @@ import AnnouncementForm from "./announcement-form";
 import Repo from '../repositories'
 import UserResult from "../models/UserResult";
 
+
 interface Prop {
   announcement: Announcement
   callbackFetchFn: () => void
