@@ -63,8 +63,8 @@ function AppProvider({children}: AppProviderProps){
     
     function isStaff(){
         const groups:any = auth.user?.profile.groups
-        _userInfo.staff = groups.indexOf('staff') >= 0 ? true:false
-        return _userInfo.staff
+        return _userInfo.staff = groups.indexOf('staff') >= 0 ? true:false
+
 
     }
 

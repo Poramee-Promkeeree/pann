@@ -17,7 +17,86 @@ function PannAppbar() {
     const handleCloseMenu = () => {
         setAnchorEl(null)
     }
-
+    if(action.isStaff()){
+        return (
+            <AppBar position='static'>
+                <Drawer
+                anchor="left"
+                open={anchorNav}
+                onClose={() => setAnchorNav(false)}
+                >
+                    <IconButton onClick={() => setAnchorNav(false)}>
+                        <ChevronLeft/>
+                    </IconButton>
+                    <Divider/>
+                    <List>
+                        <ListItem>
+                            <ListItemButton onClick={() => navigate('/home')}>
+                                <ListItemIcon>
+                                    <Home/>
+                                </ListItemIcon>
+                                <ListItemText primary='Home'/>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemButton onClick={() => navigate('/announcement')}>
+                                <ListItemIcon>
+                                    <Campaign/>
+                                </ListItemIcon>
+                                <ListItemText primary="Announcement"/>
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </Drawer>
+                <Toolbar>
+                    <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{ mr: 2 }}
+                    onClick={() => setAnchorNav(true)}
+                    >
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        PSU Announcement
+                    </Typography>
+                    <Typography>
+                        {userInfo.displayName}
+                    </Typography>
+                    <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenMenu}
+                    color='inherit'
+                    >
+                        <AccountCircle/>
+                    </IconButton>
+                    <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleCloseMenu}
+                    >
+                        {userInfo.ready && <MenuItem onClick={() => void action.signOut()}>Log out</MenuItem>}
+                    </Menu>
+                </Toolbar>
+            </AppBar>
+        )
+}
+else{
     return (
         <AppBar position='static'>
             <Drawer
@@ -36,14 +115,6 @@ function PannAppbar() {
                                 <Home/>
                             </ListItemIcon>
                             <ListItemText primary='Home'/>
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton onClick={() => navigate('/announcement')}>
-                            <ListItemIcon>
-                                <Campaign/>
-                            </ListItemIcon>
-                            <ListItemText primary="Announcement"/>
                         </ListItemButton>
                     </ListItem>
                 </List>
@@ -96,5 +167,9 @@ function PannAppbar() {
         </AppBar>
     )
 }
+}
+
+
+
 
 export default PannAppbar
