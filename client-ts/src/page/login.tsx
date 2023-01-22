@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, Paper } from '@mui/material'
 import { Box } from '@mui/system'
 import { Login as LoginIcon } from '@mui/icons-material'
 import { useAuth } from "react-oidc-context";
@@ -50,12 +50,23 @@ function Login() {
         }
     }
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 500}}>
-            <Button variant='contained' sx={{fontSize: 'large'}} onClick={() => void auth.signinRedirect()}>
-                <LoginIcon sx={{ mr: 1}}/>
-                Log in
-            </Button>       
-        </Box>
+        <Paper sx={{ bgcolor:"#E6E6FA"}}>
+            <div>
+            
+                <div>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 500}}>
+                        <img src="/01.png" width="987" height="391"/>
+                    </Box>
+                </div>
+                
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 200}}>
+                    <Button variant='contained' sx={{fontSize: 'large'}} onClick={() => void auth.signinRedirect()}>
+                        <LoginIcon sx={{ mr: 1}}/>
+                        Log in
+                    </Button>       
+                </Box>
+            </div>
+        </Paper>
     )
 }
 
