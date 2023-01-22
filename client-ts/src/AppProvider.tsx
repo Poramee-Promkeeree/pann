@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from 'react-oidc-context';
 
 function createCtx<A extends {} | null>() {
@@ -27,7 +27,7 @@ export type UserInfo = {
     ready: boolean
     username?: string
     displayName?: string
-    groups?: string[]
+    staff?: boolean
 }
 
 const initialUserInfo = {
@@ -42,15 +42,34 @@ function AppProvider({children}: AppProviderProps){
     const auth = useAuth()
     const [_userInfo, _setUserInfo] = useState<UserInfo>(initialUserInfo)
 
+
+    useEffect(() => {
+        const json = sessionStorage.getItem('userInfo') as string
+        const data = JSON.parse(json)
+        if(data){
+            _setUserInfo({
+                ready: data.ready,
+                username: data.username,
+                displayName: data.displayName,
+                staff: data.staff
+        })}
+    },[])
+
     function setUserInfo(userInfo: UserInfo){
-        _setUserInfo({...userInfo, ready: true})
+        _setUserInfo({...userInfo, ready: true,staff:isStaff()})
+        sessionStorage.setItem('userInfo',JSON.stringify(_userInfo))
+
     }
     
     function isStaff(){
-        return _userInfo.groups ? _userInfo.groups.indexOf('staff') >= 0 : false
+        const groups:any = auth.user?.profile.groups
+        _userInfo.staff = groups.indexOf('staff') >= 0 ? true:false
+        return _userInfo.staff
+
     }
 
     function signOut(){
+        sessionStorage.removeItem('userInfo')
         auth.signoutRedirect()
         _setUserInfo({ready: false})
     }
