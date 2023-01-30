@@ -8,10 +8,11 @@ import { CheckCircle, PushPin, Close } from "@mui/icons-material";
 
 interface Prop {
     userResult: UserResult
+    onUpdateUserResult: (userResult: UserResult) => void;
 }
 
 function UserResultCard(props: Prop) {
-    const [userResult, setUserResult] = useState<UserResult>(props.userResult)
+  const userResult = props.userResult
     const [popup, setPopup] = useState(false)
     const [pin,setPin] = useState(true)
 
@@ -19,7 +20,7 @@ function UserResultCard(props: Prop) {
         if(!userResult.viewDateTime){
             const result = await Repo.userResult.view(userResult.id)
             if(result) {
-                setUserResult(result)
+              props.onUpdateUserResult(result)
                 setPopup(true)
             }
         }else{
@@ -30,7 +31,7 @@ function UserResultCard(props: Prop) {
     const handleAcknowledge = async () => {
         const result = await Repo.userResult.acknowledge(userResult.id)
         if(result) {
-            setUserResult(result)
+          props.onUpdateUserResult(result)
         }
     }
 
@@ -39,14 +40,14 @@ function UserResultCard(props: Prop) {
       if (pin == false){
         setPin(true)
         if (result) {
-          setUserResult(result)
+          props.onUpdateUserResult(result)
           //setPin(true)
         }
       }else{
         setPin(false)
         if (result) {
           //setPin(false)
-          setUserResult(result)
+          props.onUpdateUserResult(result)
         }
     }
       
